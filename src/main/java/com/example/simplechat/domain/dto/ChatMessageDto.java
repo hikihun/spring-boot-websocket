@@ -1,4 +1,4 @@
-package com.example.simplechat.domain;
+package com.example.simplechat.domain.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ public class ChatMessageDto {
 
     private MessageType type;
     //채팅방 ID
-    private String roomId;
+    private Long roomId;
     //보내는 사람
     private String sender;
     //내용

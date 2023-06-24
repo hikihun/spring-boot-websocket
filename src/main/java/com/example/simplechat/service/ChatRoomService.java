@@ -1,47 +1,28 @@
 package com.example.simplechat.service;
 
-import com.example.simplechat.domain.ChatRoomDto;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
+import com.example.simplechat.domain.ChatRoom;
+import com.example.simplechat.repository.ChatRoomRepository;
 import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ChatRoomService {
 
-    private Map<String, ChatRoomDto> chatRooms;
+    private final ChatRoomRepository chatRoomRepository;
 
-    @PostConstruct
-    //의존관게 주입완료되면 실행되는 코드
-    private void init() {
-        chatRooms = new LinkedHashMap<>();
+    public List<ChatRoom> findAllRoom() {
+        return chatRoomRepository.findAll();
     }
 
-    //채팅방 불러오기
-    public List<ChatRoomDto> findAllRoom() {
-        //채팅방 최근 생성 순으로 반환
-        List<ChatRoomDto> result = new ArrayList<>(chatRooms.values());
-        Collections.reverse(result);
-
-        return result;
+    public ChatRoom findById(Long roomId) {
+        return chatRoomRepository.findById(roomId).get();
     }
 
-    //채팅방 하나 불러오기
-    public ChatRoomDto findById(String roomId) {
-        return chatRooms.get(roomId);
-    }
-
-    //채팅방 생성
-    public ChatRoomDto createRoom(String name) {
-        ChatRoomDto chatRoom = ChatRoomDto.create(name);
-        chatRooms.put(chatRoom.getRoomId(), chatRoom);
-        return chatRoom;
+    public ChatRoom createChatRoom(String name) {
+        return chatRoomRepository.save(ChatRoom.create(name));
     }
 }
