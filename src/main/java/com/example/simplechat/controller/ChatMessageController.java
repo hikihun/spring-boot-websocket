@@ -1,6 +1,6 @@
 package com.example.simplechat.controller;
 
-import com.example.simplechat.domain.ChatMessageDto;
+import com.example.simplechat.domain.dto.ChatMessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
